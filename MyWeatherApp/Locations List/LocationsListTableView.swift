@@ -2,11 +2,11 @@ import Foundation
 import UIKit
 
 final class LocationsListView: UIView {
-    enum Constant {
+    private enum Constant {
         static let estimatedRowHeight: CGFloat = 120
     }
-    
-    let heroesTableView: UITableView = {
+        
+    private let tableView: UITableView = {
         let tableView = UITableView()
         tableView.register(LocationsListTableViewCell.self, forCellReuseIdentifier: "LocationsListTableViewCell")
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -15,7 +15,12 @@ final class LocationsListView: UIView {
         return tableView
     }()
     
-    init() {
+    private let tableViewDataSource: LocationsListAdapter
+    
+    init(tableViewDelegate: UITableViewDelegate, tableViewDataSource: LocationsListAdapter = .init()) {
+        self.tableViewDataSource = tableViewDataSource
+        tableView.dataSource = tableViewDataSource
+        tableView.delegate = tableViewDelegate
         super.init(frame: .zero)
         setup()
     }
@@ -30,15 +35,22 @@ final class LocationsListView: UIView {
     }
     
     private func addSubviews() {
-        addSubview(heroesTableView)
+        addSubview(tableView)
     }
     
     private func addContraints() {
         NSLayoutConstraint.activate([
-            heroesTableView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            heroesTableView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            heroesTableView.topAnchor.constraint(equalTo: topAnchor),
-            heroesTableView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            tableView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            tableView.topAnchor.constraint(equalTo: topAnchor),
+            tableView.bottomAnchor.constraint(equalTo: bottomAnchor),
         ])
+    }
+}
+
+extension LocationsListView: LocationsListUI {
+    func update(locations: [LocationModel]) {
+        tableViewDataSource.locations = locations
+        tableView.reloadData()
     }
 }
