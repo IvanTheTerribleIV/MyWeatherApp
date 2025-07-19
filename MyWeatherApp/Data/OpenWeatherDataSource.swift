@@ -5,7 +5,7 @@ protocol OpenWeatherDataSourceProtocol {
     func getForecast(lat: Double, lon: Double) async throws -> [OpenWeatherDTO]
 }
 
-final class OpenWeatherDataSource: OpenWeatherDataSourceProtocol {
+struct OpenWeatherDataSource: OpenWeatherDataSourceProtocol {
     private let apiClient: APIClientProtocol
     private let decoder: JSONDecoderProtocol
     

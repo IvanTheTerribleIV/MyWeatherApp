@@ -3,32 +3,31 @@ import Foundation
 protocol LocationsListPresenterProtocol: AnyObject {
     var ui: LocationsListUI? { get set }
     func screenTitle() -> String
-    func getHeroes()
+    func getLocations()
 }
 
 protocol LocationsListUI: AnyObject {
-    func update(heroes: [LocationModel])
+    func update(locations: [LocationModel])
 }
 
 final class LocationsListPresenter: LocationsListPresenterProtocol {
     var ui: LocationsListUI?
-    private let getHeroesUseCase: GetHeroesUseCaseProtocol
+    private let getLocationsUseCase: GetLocationsUseCaseProtocol
     
-    init(getHeroesUseCase: GetHeroesUseCaseProtocol = GetHeroes()) {
-        self.getHeroesUseCase = getHeroesUseCase
+    init(getLocationsUseCase: GetLocationsUseCaseProtocol = GetLocations()) {
+        self.getLocationsUseCase = getLocationsUseCase
     }
     
     func screenTitle() -> String {
-        "List of Heroes"
+        "List of Locations"
     }
     
     // MARK: UseCases
     
-    func getHeroes() {
-        getHeroesUseCase.execute { characterDataContainer in
-            print("Characters \(characterDataContainer.characters)")
-            self.ui?.update(heroes: characterDataContainer.characters)
-        }
+    func getLocations() {
+        let locations = getLocationsUseCase.execute()
+        print("Characters \(locations)")
+        self.ui?.update(locations: locations)
     }
 }
 

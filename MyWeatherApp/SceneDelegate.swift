@@ -13,7 +13,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let locationsListViewController = LocationsListViewController()
         locationsListViewController.presenter = presenter
         
-        let navigationController = UINavigationController(rootViewController: listHeroesViewController)
+        let navigationController = UINavigationController(rootViewController: locationsListViewController)
         window.rootViewController = navigationController
         self.window = window
         self.window?.makeKeyAndVisible()

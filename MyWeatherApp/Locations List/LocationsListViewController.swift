@@ -4,7 +4,7 @@ final class LocationsListViewController: UIViewController {
     var mainView: LocationsListView { return view as! LocationsListView  }
     
     var presenter: LocationsListPresenterProtocol?
-    var LocationsListProvider: LocationsListAdapter?
+    var locationsListProvider: LocationsListAdapter?
     
     override func loadView() {
         view = LocationsListView()
@@ -12,19 +12,20 @@ final class LocationsListViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        LocationsListProvider = LocationsListAdapter(tableView: mainView.heroesTableView)
-        presenter?.getHeroes()
+        locationsListProvider = LocationsListAdapter(tableView: mainView.heroesTableView)
+        
         presenter?.ui = self
         
         title = presenter?.screenTitle()
         
         mainView.heroesTableView.delegate = self
+        presenter?.getLocations()
     }
 }
 
 extension LocationsListViewController: LocationsListUI {
-    func update(heroes: [CharacterDataModel]) {
-        LocationsListProvider?.heroes = heroes
+    func update(locations: [LocationModel]) {
+        locationsListProvider?.locations = locations
     }
 }
 

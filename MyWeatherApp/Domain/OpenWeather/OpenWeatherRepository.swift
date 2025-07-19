@@ -5,7 +5,7 @@ protocol OpenWeatherRepositoryProtocol {
     func getForecast(lat: Double, lon: Double) async throws -> [CurrentWeatherModel]
 }
 
-final class OpenWeatherRepository: OpenWeatherRepositoryProtocol {
+struct OpenWeatherRepository: OpenWeatherRepositoryProtocol {
     private let dataSource: OpenWeatherDataSourceProtocol
     
     init(dataSource: OpenWeatherDataSourceProtocol = OpenWeatherDataSource()) {
