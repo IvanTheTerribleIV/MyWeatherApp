@@ -1,10 +1,11 @@
 import UIKit
 
 final class LocationsListViewController: UIViewController {
-    private lazy var locationsView: LocationsListView = {
-        LocationsListView(tableViewDelegate: self)
-    }()
     private var presenter: LocationsListPresenterProtocol
+    
+    override func loadView() {
+        view = LocationsListView(tableViewDelegate: self)
+    }
 
     init(_ presenter: LocationsListPresenterProtocol) {
         self.presenter = presenter
@@ -19,8 +20,10 @@ final class LocationsListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        presenter.ui = self.locationsView
-        
+        presenter.ui = view as? LocationsListUI
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+
         title = presenter.screenTitle()
         presenter.getLocations()
     }
@@ -28,11 +31,6 @@ final class LocationsListViewController: UIViewController {
 
 extension LocationsListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let presenter = LocationsListPresenter()
-        let LocationsListViewController = LocationsListViewController(presenter)
-        LocationsListViewController.presenter = presenter
-        
-        navigationController?.pushViewController(LocationsListViewController, animated: true)
+        presenter.selectLocation(at: indexPath)
     }
 }
-

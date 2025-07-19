@@ -11,6 +11,8 @@ protocol LocationsRepositoryProtocol {
 
 struct LocationsRepository: LocationsRepositoryProtocol {
     func getLocations() -> [LocationModel] {
-        [.init(name: "Barcelona", latitude: 41.415518, longitude: 2.194770)]
+        [.init(name: "Barcelona", latitude: 41.415518, longitude: 2.194770),
+         .init(name: "Barcelona", latitude: 41.415518, longitude: 2.194770),
+         .init(name: "Barcelona", latitude: 41.415518, longitude: 2.194770)]
     }
 }

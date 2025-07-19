@@ -2,9 +2,9 @@ import Foundation
 import UIKit
 
 final class LocationsListAdapter: NSObject, UITableViewDataSource {
-    var locations: [LocationModel] 
+    var locations: [LocationsListRowPresenterProtocol]
         
-    init(locations: [LocationModel] = []) {
+    init(locations: [LocationsListRowPresenterProtocol] = []) {
         self.locations = locations
         super.init()
     }

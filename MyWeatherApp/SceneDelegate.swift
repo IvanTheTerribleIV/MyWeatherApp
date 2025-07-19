@@ -1,7 +1,8 @@
 import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
-
+    private var wireframe: LocationsWireframe!
+    
     var window: UIWindow?
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
@@ -9,13 +10,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let window = UIWindow(windowScene: windowScene)
         
-        let presenter = LocationsListPresenter()
-        let locationsListViewController = LocationsListViewController(presenter: presenter)
-        
-        let navigationController = UINavigationController(rootViewController: locationsListViewController)
+        let navigationController = UINavigationController()
         window.rootViewController = navigationController
+        
         self.window = window
         self.window?.makeKeyAndVisible()
+        
+        wireframe = .init(navigationController)
+        wireframe.onLocationsList()
     }
 }
 

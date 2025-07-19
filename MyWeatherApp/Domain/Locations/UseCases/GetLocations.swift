@@ -1,5 +1,5 @@
 //
-//  GetHeroesUseCaseProtocol.swift
+//  GetLocations.swift
 //  MyWeatherApp
 //
 //  Created by Ivan Makarov on 19.07.2025.

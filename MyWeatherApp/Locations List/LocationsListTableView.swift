@@ -12,6 +12,7 @@ final class LocationsListView: UIView {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = Constant.estimatedRowHeight
+        tableView.backgroundColor = .clear
         return tableView
     }()
     
@@ -32,6 +33,7 @@ final class LocationsListView: UIView {
     private func setup() {
         addSubviews()
         addContraints()
+        backgroundColor = .black
     }
     
     private func addSubviews() {
@@ -49,7 +51,7 @@ final class LocationsListView: UIView {
 }
 
 extension LocationsListView: LocationsListUI {
-    func update(locations: [LocationModel]) {
+    func update(locations: [LocationsListRowPresenterProtocol]) {
         tableViewDataSource.locations = locations
         tableView.reloadData()
     }
