@@ -1,7 +1,7 @@
 import UIKit
 
 final class LocationsListViewController: UIViewController {
-    var mainView: LocationsListesView { return view as! LocationsListView  }
+    var mainView: LocationsListView { return view as! LocationsListView  }
     
     var presenter: LocationsListPresenterProtocol?
     var LocationsListProvider: LocationsListAdapter?

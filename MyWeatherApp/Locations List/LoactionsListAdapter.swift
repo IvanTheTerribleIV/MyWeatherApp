@@ -2,7 +2,7 @@ import Foundation
 import UIKit
 
 final class LocationsListAdapter: NSObject, UITableViewDataSource {
-    var heroes: [CharacterDataModel] {
+    var heroes: [LocationModel] {
         didSet {
             DispatchQueue.main.async {
                 self.tableView.reloadData()
@@ -12,7 +12,7 @@ final class LocationsListAdapter: NSObject, UITableViewDataSource {
     
     private let tableView: UITableView
     
-    init(tableView: UITableView, heroes: [CharacterDataModel] = []) {
+    init(tableView: UITableView, heroes: [LocationModel] = []) {
         self.tableView = tableView
         self.heroes = heroes
         super.init()
@@ -24,7 +24,7 @@ final class LocationsListAdapter: NSObject, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ListHeroesTableViewCell", for: indexPath) as! ListHeroesTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "LocationsListTableViewCell", for: indexPath) as! LocationsListTableViewCell
         
         let model = heroes[indexPath.row]
         cell.configure(model: model)

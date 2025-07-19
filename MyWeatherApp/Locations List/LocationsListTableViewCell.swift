@@ -1,6 +1,6 @@
 import Foundation
 import UIKit
-import Kingfisher
+//import Kingfisher
 
 final class LocationsListTableViewCell: UITableViewCell {
     private let heroeImageView: UIImageView = {
@@ -48,8 +48,8 @@ final class LocationsListTableViewCell: UITableViewCell {
         ])
     }
     
-    func configure(model: CharacterDataModel) {
-        heroeImageView.kf.setImage(with: URL(string: model.thumbnail.path + "/portrait_small." + model.thumbnail.extension))
+    func configure(model: LocationModel) {
+//        heroeImageView.kf.setImage(with: URL(string: model.thumbnail.path + "/portrait_small." + model.thumbnail.extension))
         heroeName.text = model.name
     }
 }

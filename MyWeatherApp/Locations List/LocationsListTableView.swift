@@ -8,7 +8,7 @@ final class LocationsListView: UIView {
     
     let heroesTableView: UITableView = {
         let tableView = UITableView()
-        tableView.register(ListHeroesTableViewCell.self, forCellReuseIdentifier: "ListHeroesTableViewCell")
+        tableView.register(LocationsListTableViewCell.self, forCellReuseIdentifier: "LocationsListTableViewCell")
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = Constant.estimatedRowHeight

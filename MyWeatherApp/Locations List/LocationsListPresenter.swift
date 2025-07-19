@@ -1,17 +1,17 @@
 import Foundation
 
 protocol LocationsListPresenterProtocol: AnyObject {
-    var ui: ListHeroesUI? { get set }
+    var ui: LocationsListUI? { get set }
     func screenTitle() -> String
     func getHeroes()
 }
 
-protocol ListHeroesUI: AnyObject {
-    func update(heroes: [CharacterDataModel])
+protocol LocationsListUI: AnyObject {
+    func update(heroes: [LocationModel])
 }
 
 final class LocationsListPresenter: LocationsListPresenterProtocol {
-    var ui: ListHeroesUI?
+    var ui: LocationsListUI?
     private let getHeroesUseCase: GetHeroesUseCaseProtocol
     
     init(getHeroesUseCase: GetHeroesUseCaseProtocol = GetHeroes()) {
