@@ -2,19 +2,11 @@ import Foundation
 import UIKit
 
 final class LocationsListAdapter: NSObject, UITableViewDataSource {
-    var locations: [LocationModel] {
-        didSet {
-            self.tableView.reloadData()
-        }
-    }
-    
-    private let tableView: UITableView
-    
-    init(tableView: UITableView, locations: [LocationModel] = []) {
-        self.tableView = tableView
+    var locations: [LocationModel] 
+        
+    init(locations: [LocationModel] = []) {
         self.locations = locations
         super.init()
-        self.tableView.dataSource = self
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
