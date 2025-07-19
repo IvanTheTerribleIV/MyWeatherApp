@@ -10,8 +10,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let window = UIWindow(windowScene: windowScene)
         
         let presenter = LocationsListPresenter()
-        let locationsListViewController = LocationsListViewController()
-        locationsListViewController.presenter = presenter
+        let locationsListViewController = LocationsListViewController(presenter: presenter)
         
         let navigationController = UINavigationController(rootViewController: locationsListViewController)
         window.rootViewController = navigationController

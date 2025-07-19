@@ -1,38 +1,35 @@
 import UIKit
 
 final class LocationsListViewController: UIViewController {
-    var mainView: LocationsListView { return view as! LocationsListView  }
-    
-    var presenter: LocationsListPresenterProtocol?
-    var locationsListProvider: LocationsListAdapter?
-    
-    override func loadView() {
-        view = LocationsListView()
-    }
+    private lazy var locationsView: LocationsListView = {
+        LocationsListView(tableViewDelegate: self)
+    }()
+    private var presenter: LocationsListPresenterProtocol
 
+    init(_ presenter: LocationsListPresenterProtocol) {
+        self.presenter = presenter
+
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        locationsListProvider = LocationsListAdapter(tableView: mainView.heroesTableView)
         
-        presenter?.ui = self
+        presenter.ui = self.locationsView
         
-        title = presenter?.screenTitle()
-        
-        mainView.heroesTableView.delegate = self
-        presenter?.getLocations()
-    }
-}
-
-extension LocationsListViewController: LocationsListUI {
-    func update(locations: [LocationModel]) {
-        locationsListProvider?.locations = locations
+        title = presenter.screenTitle()
+        presenter.getLocations()
     }
 }
 
 extension LocationsListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let presenter = LocationsListPresenter()
-        let LocationsListViewController = LocationsListViewController()
+        let LocationsListViewController = LocationsListViewController(presenter)
         LocationsListViewController.presenter = presenter
         
         navigationController?.pushViewController(LocationsListViewController, animated: true)

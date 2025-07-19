@@ -1,7 +1,6 @@
 import Foundation
 
 protocol LocationsListPresenterProtocol: AnyObject {
-//    var locationsListProvider: LocationsListAdapter { get }
     var ui: LocationsListUI? { get set }
     func screenTitle() -> String
     func getLocations()
