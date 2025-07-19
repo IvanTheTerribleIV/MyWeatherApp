@@ -22,7 +22,7 @@ struct URLRequestFactory: URLRequestFactoryProtocol {
         case .get:
             urlComponents.queryItems = endpoint.parameters.map { URLQueryItem(name: $0.key, value: $0.value) }
         case .post:
-            var bodyStringg = endpoint.parameters.map { "\($0.key)=\($0.value)" }.joined(separator: "&")
+            let bodyStringg = endpoint.parameters.map { "\($0.key)=\($0.value)" }.joined(separator: "&")
             httpBody = bodyStringg.data(using: .utf8)
         }
         
