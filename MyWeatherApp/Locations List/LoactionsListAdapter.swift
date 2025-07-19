@@ -1,7 +1,7 @@
 import Foundation
 import UIKit
 
-final class ListHeroesAdapter: NSObject, UITableViewDataSource {
+final class LocationsListAdapter: NSObject, UITableViewDataSource {
     var heroes: [CharacterDataModel] {
         didSet {
             DispatchQueue.main.async {

@@ -1,6 +1,6 @@
 import Foundation
 
-protocol ListHeroesPresenterProtocol: AnyObject {
+protocol LocationsListPresenterProtocol: AnyObject {
     var ui: ListHeroesUI? { get set }
     func screenTitle() -> String
     func getHeroes()
@@ -10,7 +10,7 @@ protocol ListHeroesUI: AnyObject {
     func update(heroes: [CharacterDataModel])
 }
 
-final class ListHeroesPresenter: ListHeroesPresenterProtocol {
+final class LocationsListPresenter: LocationsListPresenterProtocol {
     var ui: ListHeroesUI?
     private let getHeroesUseCase: GetHeroesUseCaseProtocol
     

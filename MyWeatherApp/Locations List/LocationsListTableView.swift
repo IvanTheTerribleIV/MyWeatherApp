@@ -1,7 +1,7 @@
 import Foundation
 import UIKit
 
-final class ListHeroesView: UIView {
+final class LocationsListView: UIView {
     enum Constant {
         static let estimatedRowHeight: CGFloat = 120
     }
