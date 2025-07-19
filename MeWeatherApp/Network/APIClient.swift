@@ -20,7 +20,6 @@ struct APIClient: APIClientProtocol {
     private let requestFactory: URLRequestFactoryProtocol.Type
 
     init(_ session: URLSessionType = URLSession.shared,
-         appSettings: AppSettings = AppSettings(),
          requestFactory: URLRequestFactoryProtocol.Type = URLRequestFactory.self) {
         self.session = session
         self.serverSettings = serverSettings
@@ -28,7 +27,7 @@ struct APIClient: APIClientProtocol {
     }
     
     func perorrmRequest(with endpoint: any RestEndpoint) async throws(NetworkError) -> Data {
-        let baseUrl = appSettings.currentWeatherService.baseUrl
+        let baseUrl = AppSettings.shared.currentWeatherService.baseUrl
         let request = try requestFactory.buildURLRequest(from: endpoint, on: baseUrl)
         
         let (data, response) = try await session.data(for: request)

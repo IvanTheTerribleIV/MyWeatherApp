@@ -17,12 +17,12 @@ struct OpenWeatherServerSettings: ServerSettingsType {
     let apiKey: String = "b717d41ff1cac419376fbfa16005204e"
 }
 
-
-
 final class AppSettings {
     var currentWeatherService: ServerSettingsType
     
     init(currentWeatherService: ServerSettingsType = OpenWeatherServerSettings()) {
         self.currentWeatherService = currentWeatherService
     }
+    
+    static let shared = AppSettings()
 }
