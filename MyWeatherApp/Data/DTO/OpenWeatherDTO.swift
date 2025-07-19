@@ -36,6 +36,6 @@ struct OpenWeatherMainDTO: Decodable {
 }
 
 struct Sys: Decodable {
-    let sunrise: Double
-    let sunset: Double
+    let sunrise: Double?
+    let sunset: Double?
 }

@@ -1,5 +1,5 @@
 //
-//  AccuWeatherCurrentConditionEndpoint.swift
+//  OpenWeatherCurrentConditionEndpoint.swift
 //  MeWeatherApp
 //
 //  Created by Ivan Makarov on 19.07.2025.

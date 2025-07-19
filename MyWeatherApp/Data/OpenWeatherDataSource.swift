@@ -2,7 +2,7 @@ import Foundation
 
 protocol OpenWeatherDataSourceProtocol {
     func getCurrentWeather(lat: Double, lon: Double) async throws -> OpenWeatherDTO
-    func getForecast() async throws -> [OpenWeatherDTO]
+    func getForecast(lat: Double, lon: Double) async throws -> [OpenWeatherDTO]
 }
 
 final class OpenWeatherDataSource: OpenWeatherDataSourceProtocol {
@@ -23,8 +23,13 @@ final class OpenWeatherDataSource: OpenWeatherDataSourceProtocol {
         return dto
     }
     
-    func getForecast() async throws -> [OpenWeatherDTO] {
-        []
+    func getForecast(lat: Double, lon: Double) async throws -> [OpenWeatherDTO] {
+        let apiKey = AppSettings.shared.currentWeatherService.apiKey
+        let parameters: [String: Any] = ["lat": lat, "lon": lon, "units": "metric", "appid": apiKey]
+        let endpoint = OpenWeatherForecastEndpoint(parameters)
+        let data = try await apiClient.perorrmRequest(with: endpoint)
+        let dto = try decoder.decode(OpenWeatherForecastDTO.self, from: data)
+        return dto.list
     }
 }
 
