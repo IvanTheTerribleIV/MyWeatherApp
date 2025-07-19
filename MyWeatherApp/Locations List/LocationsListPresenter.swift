@@ -1,6 +1,7 @@
 import Foundation
 
 protocol LocationsListPresenterProtocol: AnyObject {
+//    var locationsListProvider: LocationsListAdapter { get }
     var ui: LocationsListUI? { get set }
     func screenTitle() -> String
     func getLocations()
@@ -11,7 +12,7 @@ protocol LocationsListUI: AnyObject {
 }
 
 final class LocationsListPresenter: LocationsListPresenterProtocol {
-    var ui: LocationsListUI?
+    weak var ui: LocationsListUI?
     private let getLocationsUseCase: GetLocationsUseCaseProtocol
     
     init(getLocationsUseCase: GetLocationsUseCaseProtocol = GetLocations()) {
@@ -26,8 +27,7 @@ final class LocationsListPresenter: LocationsListPresenterProtocol {
     
     func getLocations() {
         let locations = getLocationsUseCase.execute()
-        print("Characters \(locations)")
-        self.ui?.update(locations: locations)
+        ui?.update(locations: locations)
     }
 }
 
