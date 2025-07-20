@@ -20,12 +20,36 @@ final class LocationsListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        configureUI()
+        
         presenter.ui = view as? LocationsListUI
-        navigationController?.navigationBar.prefersLargeTitles = true
-        navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
-
-        title = presenter.screenTitle()
+        
         presenter.getLocations()
+    }
+    
+    private func configureUI() {
+        let leftBarItem = UIBarButtonItem(image: UIImage(systemName: "ellipsis.circle"),
+                                          style: .plain,
+                                          target: self,
+                                          action: #selector(settingsButtonPressed))
+        navigationItem.leftBarButtonItem = leftBarItem
+        
+        let rightBarItem = UIBarButtonItem(image: UIImage(systemName: "plus.circle"),
+                                           style: .plain,
+                                           target: self,
+                                           action: #selector(addButtonPressed))
+        
+        navigationItem.rightBarButtonItem = rightBarItem
+        
+        title = presenter.screenTitle()
+    }
+    
+    @objc private func settingsButtonPressed() {
+        presenter.openSettings()
+    }
+    
+    @objc private func addButtonPressed() {
+        presenter.addNewLocation()
     }
 }
 

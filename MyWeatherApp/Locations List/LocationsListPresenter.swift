@@ -5,7 +5,9 @@ protocol LocationsListPresenterProtocol: AnyObject {
     func screenTitle() -> String
     func getLocations()
     
-    func selectLocation(at indexPath: IndexPath) 
+    func selectLocation(at indexPath: IndexPath)
+    func openSettings()
+    func addNewLocation()
 }
 
 protocol LocationsListUI: AnyObject {
@@ -30,11 +32,9 @@ final class LocationsListPresenter: LocationsListPresenterProtocol {
     
     // MARK: UseCases
     func getLocations() {
-        locations = getLocationsUseCase.execute()
-        let useCase = GetWeatherUseCase()
-        let presenters: [LocationsListRowPresenter] = locations.map { .init(model: $0, useCase: useCase) }
-        
-        ui?.update(locations: presenters)
+        locations = getLocationsUseCase.getLocations()
+
+        updateLocations()
     }
     
     func selectLocation(at indexPath: IndexPath) {
@@ -42,7 +42,21 @@ final class LocationsListPresenter: LocationsListPresenterProtocol {
         wireframe.onLocation(location)
     }
     
-    func cancelAllTasks() {
+    func openSettings() {
+        wireframe.onServerSelection()
+    }
+    
+    func addNewLocation() {
+        wireframe.onLocationSearch { [weak self] newModel in
+            self?.locations.append(newModel)
+            self?.updateLocations()
+        }
+    }
+    
+    private func updateLocations() {
+        let useCase = GetWeatherUseCase()
+        let presenters: [LocationsListRowPresenter] = locations.map { .init(model: $0, useCase: useCase) }
         
+        ui?.update(locations: presenters)
     }
 }

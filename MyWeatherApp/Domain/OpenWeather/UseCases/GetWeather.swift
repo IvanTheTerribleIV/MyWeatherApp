@@ -6,7 +6,8 @@
 //
 
 protocol GetWeatherUseCaseProtocol {
-    func execute(for location: LocationModel) async throws -> CurrentWeatherModel
+    func getCurrentWeather(for location: LocationModel) async throws -> CurrentWeatherModel
+    func getForecast(for location: LocationModel) async throws -> [CurrentWeatherModel]
 }
 
 struct GetWeatherUseCase: GetWeatherUseCaseProtocol {
@@ -16,7 +17,11 @@ struct GetWeatherUseCase: GetWeatherUseCaseProtocol {
         self.repository = repository
     }
     
-    func execute(for location: LocationModel) async throws -> CurrentWeatherModel {
+    func getCurrentWeather(for location: LocationModel) async throws -> CurrentWeatherModel {
         try await repository.getCurrentWeather(lat: location.latitude, lon: location.longitude)
+    }
+    
+    func getForecast(for location: LocationModel) async throws -> [CurrentWeatherModel] {
+        try await repository.getForecast(lat: location.latitude, lon: location.longitude)
     }
 }
