@@ -60,7 +60,7 @@ final class LocationSearchViewModel: ObservableObject {
             do {
                 let location = try await useCase.getLocations(by: option.title)
                 option.isLoading = false
-                wireframe.onLocation(location)
+                wireframe.onLocationDetails(location)
             } catch {
                 option.isLoading = false
                 let errorViewModel = ErrorViewModel(title: "Error", subtitle: "The location not found, try another option", action: {})

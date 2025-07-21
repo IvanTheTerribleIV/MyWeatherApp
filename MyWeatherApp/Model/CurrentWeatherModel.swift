@@ -5,6 +5,8 @@
 //  Created by Ivan Makarov on 19.07.2025.
 //
 
+import Foundation
+
 struct CurrentWeatherModel {
     let condition: String
     let description: String
@@ -19,6 +21,8 @@ struct CurrentWeatherModel {
     
     let sunrise: Double?
     let sunset: Double?
+    
+    let date: Date
 }
 
 extension CurrentWeatherModel {
@@ -37,6 +41,7 @@ extension CurrentWeatherModel {
                   pressure: openWeatherDTO.main.pressure,
                   humidity: openWeatherDTO.main.humidity,
                   sunrise: openWeatherDTO.sys.sunrise,
-                  sunset: openWeatherDTO.sys.sunset)
+                  sunset: openWeatherDTO.sys.sunset,
+                  date: Date(timeIntervalSince1970: openWeatherDTO.date))
     }
 }

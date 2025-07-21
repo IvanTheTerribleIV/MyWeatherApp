@@ -37,6 +37,7 @@ struct LocationsWireframe: LocationsWireframeProtocol {
         let viewModel = LocationSearchViewModel(useCase: GetLocations(), wireframe: wireFrame)
         let view = LocationSearchView(viewModel)
         let viewController = UIHostingController(rootView: view)
+        
         navController.setViewControllers([viewController], animated: true)
         
         navigationController.present(navController, animated: true)

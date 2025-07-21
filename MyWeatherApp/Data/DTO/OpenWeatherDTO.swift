@@ -5,10 +5,20 @@
 //  Created by Ivan Makarov on 19.07.2025.
 //
 
+import Foundation
+
 struct OpenWeatherDTO: Decodable {
     let weather: [OpenWeatherConditionDTO]
     let main: OpenWeatherMainDTO
     let sys: Sys
+    let date: TimeInterval
+    
+    enum CodingKeys: String, CodingKey {
+        case weather
+        case main
+        case sys
+        case date = "dt"
+    }
 }
 
 struct OpenWeatherConditionDTO: Decodable {

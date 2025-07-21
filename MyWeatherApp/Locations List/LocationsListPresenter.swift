@@ -39,7 +39,7 @@ final class LocationsListPresenter: LocationsListPresenterProtocol {
     
     func selectLocation(at indexPath: IndexPath) {
         let location = locations[indexPath.row]
-        wireframe.onLocation(location)
+        wireframe.onLocationDetails(location)
     }
     
     func openSettings() {
