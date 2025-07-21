@@ -9,9 +9,8 @@ import Foundation
 
 final class LocationForecastViewModel: ObservableObject {
     private let model: LocationModel
-    private let wireframe: LocationsWireframeProtocol
     private let useCase: GetWeatherUseCaseProtocol
-    
+    private let completion: (LocationModel) -> Void
     private(set) var task: Task<Void, Never>?
     
     var currentWeatherViewModel: CurrentWeatherViewModel {
@@ -22,13 +21,13 @@ final class LocationForecastViewModel: ObservableObject {
         .init(model: model, useCase: useCase)
     }
     
-    init(model: LocationModel, useCase: GetWeatherUseCaseProtocol = GetWeatherUseCase(), wireframe: LocationsWireframeProtocol) {
+    init(model: LocationModel, useCase: GetWeatherUseCaseProtocol = GetWeatherUseCase(), completion: @escaping (LocationModel?) -> Void) {
         self.model = model
         self.useCase = useCase
-        self.wireframe = wireframe
+        self.completion = completion
     }
     
-    func addLocationn() {
-        
+    func addLocation() {
+        completion(model)
     }
 }

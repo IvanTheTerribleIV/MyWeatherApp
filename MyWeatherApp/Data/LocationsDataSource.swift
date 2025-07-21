@@ -19,7 +19,7 @@ final class LocationsDataSource: NSObject, LocationsDataSourceProtocol {
     init(geocoder: GeoCoderProtocol = CLGeocoder()) {
         super.init()
         completer.delegate = self
-        completer.resultTypes = [.address, .pointOfInterest]
+        completer.resultTypes = [.address]
     }
     
     func getLocations(by name: String) async throws -> [MKMapItem] {

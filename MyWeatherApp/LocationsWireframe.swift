@@ -10,14 +10,14 @@ import SwiftUI
 
 protocol LocationsWireframeProtocol {
     func onLocationsList()
-    func onLocationDetails(_ location: LocationModel)
+    func onLocationDetails(_ location: LocationModel, completion: @escaping (LocationModel?) -> Void)
     func onServerSelection()
-    func onLocationSearch(completion: @escaping (LocationModel) -> Void)
+    func onLocationSearch(completion: @escaping (LocationModel?) -> Void)
     func showErrorAlert(with errorViewModel: ErrorViewModel)
 }
 
 struct LocationsWireframe: LocationsWireframeProtocol {
-    private let navigationController: UINavigationController
+    private unowned let navigationController: UINavigationController
     
     init(_ navigationController: UINavigationController) {
         self.navigationController = navigationController
@@ -31,10 +31,14 @@ struct LocationsWireframe: LocationsWireframeProtocol {
         navigationController.setViewControllers([locationsListViewController], animated: true)
     }
     
-    func onLocationSearch(completion: @escaping (LocationModel) -> Void) {
+    func onLocationSearch(completion: @escaping (LocationModel?) -> Void) {
         let navController = UINavigationController()
         let wireFrame = LocationsWireframe(navController)
-        let viewModel = LocationSearchViewModel(useCase: GetLocations(), wireframe: wireFrame)
+        let viewModel = LocationSearchViewModel(wireframe: wireFrame) { location in
+            self.navigationController.dismiss(animated: true) {
+                completion(location)
+            }
+        }
         let view = LocationSearchView(viewModel)
         let viewController = UIHostingController(rootView: view)
         
@@ -43,9 +47,8 @@ struct LocationsWireframe: LocationsWireframeProtocol {
         navigationController.present(navController, animated: true)
     }
     
-    func onLocationDetails(_ location: LocationModel) {
-        let wireFrame = LocationsWireframe(navigationController)
-        let viewModel = LocationForecastViewModel(model: location, wireframe: wireFrame)
+    func onLocationDetails(_ location: LocationModel, completion: @escaping (LocationModel?) -> Void) {
+        let viewModel = LocationForecastViewModel(model: location, completion: completion)
         let view = LocationForecastView(viewModel)
         let viewController = UIHostingController(rootView: view)
         

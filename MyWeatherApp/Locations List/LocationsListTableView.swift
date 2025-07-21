@@ -53,6 +53,6 @@ final class LocationsListView: UIView {
 extension LocationsListView: LocationsListUI {
     func update(locations: [LocationsListRowPresenterProtocol]) {
         tableViewDataSource.locations = locations
-        tableView.reloadData()
+        tableView.reloadSections(IndexSet(integer: 0), with: .fade)
     }
 }

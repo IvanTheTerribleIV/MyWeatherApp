@@ -39,7 +39,7 @@ final class LocationsListPresenter: LocationsListPresenterProtocol {
     
     func selectLocation(at indexPath: IndexPath) {
         let location = locations[indexPath.row]
-        wireframe.onLocationDetails(location)
+        wireframe.onLocationDetails(location, completion: { _ in })
     }
     
     func openSettings() {
@@ -48,8 +48,10 @@ final class LocationsListPresenter: LocationsListPresenterProtocol {
     
     func addNewLocation() {
         wireframe.onLocationSearch { [weak self] newModel in
-            self?.locations.append(newModel)
-            self?.updateLocations()
+            if let newModel {
+                self?.locations.append(newModel)
+                self?.updateLocations()
+            }            
         }
     }
     

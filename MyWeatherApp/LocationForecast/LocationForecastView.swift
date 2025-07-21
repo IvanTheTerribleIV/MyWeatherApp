@@ -19,9 +19,9 @@ struct LocationForecastView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: {
-                        
+                        viewModel.addLocation()
                     }) {
-                        Text("Add")
+                        Text("Done")
                     }
                 }
             }

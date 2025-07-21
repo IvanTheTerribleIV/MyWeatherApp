@@ -20,7 +20,12 @@ struct SearchOptionView: View {
     var body: some View {
         Button(action: selectionAction) {
             HStack {
-                Text(viewModel.title)
+                VStack(alignment: .leading) {
+                    Text(viewModel.title)
+                        .font(.system(size: 16).bold())
+                    Text(viewModel.subtitle)
+                        .font(.system(size: 12))
+                }
                 Spacer()
                 if viewModel.isLoading {
                     ProgressView()

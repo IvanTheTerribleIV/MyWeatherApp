@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct LocationSearchView: View {
-    @Environment(\.dismiss) private var dismiss
     @StateObject
     private var viewModel: LocationSearchViewModel
     
@@ -21,9 +20,7 @@ struct LocationSearchView: View {
             contentView
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button(action: {
-                        dismiss()
-                    }) {
+                    Button(action: viewModel.onCancel) {
                         Text("Cancel")
                     }
                 }
@@ -51,15 +48,6 @@ struct LocationSearchView: View {
             ForEach(viewModel.locationsOptions) { option in
                 SearchOptionView(viewModel: option) {
                     viewModel.select(option)
-                }
-            }
-        }
-        .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button(action: {
-                    dismiss()
-                }) {
-                    Text("Cancel")
                 }
             }
         }
