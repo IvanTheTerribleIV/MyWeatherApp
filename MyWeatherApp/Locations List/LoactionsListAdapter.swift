@@ -31,6 +31,8 @@ final class LocationsListAdapter: NSObject, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
+            let presenter = locations[indexPath.row]
+            presenter.deleteData()
             locations.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
         }

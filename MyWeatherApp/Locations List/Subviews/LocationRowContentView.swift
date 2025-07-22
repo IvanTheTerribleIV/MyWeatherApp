@@ -20,7 +20,7 @@ final class LocationRowContentView: UIView {
     
     private let locationNameLabel: UILabel = {
         let label = UILabel()
-        label.numberOfLines = 0
+        label.numberOfLines = 2
         label.font = .systemFont(ofSize: 18, weight: .bold)
         label.setContentHuggingPriority(.required, for: .vertical)
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -74,7 +74,7 @@ final class LocationRowContentView: UIView {
     private func addContraints() {
         NSLayoutConstraint.activate([
             locationNameLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 12),
-            locationNameLabel.trailingAnchor.constraint(equalTo: currentTemperatureLabel.leadingAnchor, constant: 12),
+            locationNameLabel.trailingAnchor.constraint(equalTo: currentTemperatureLabel.leadingAnchor, constant: -12),
             locationNameLabel.topAnchor.constraint(equalTo: topAnchor, constant: 8),
             currentTemperatureLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -12),
             currentTemperatureLabel.topAnchor.constraint(equalTo: topAnchor, constant: 8),

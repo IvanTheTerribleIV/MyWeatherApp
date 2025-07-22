@@ -10,7 +10,7 @@ import SwiftUI
 
 protocol LocationsWireframeProtocol {
     func onLocationsList()
-    func onLocationDetails(_ location: LocationModel, completion: @escaping (LocationModel?) -> Void)
+    func onLocationDetails(_ location: LocationModel, completion: ((LocationModel?) -> Void)?)
     func onServerSelection()
     func onLocationSearch(completion: @escaping (LocationModel?) -> Void)
     func showErrorAlert(with errorViewModel: ErrorViewModel)
@@ -47,12 +47,22 @@ struct LocationsWireframe: LocationsWireframeProtocol {
         navigationController.present(navController, animated: true)
     }
     
-    func onLocationDetails(_ location: LocationModel, completion: @escaping (LocationModel?) -> Void) {
-        let viewModel = LocationForecastViewModel(model: location, completion: completion)
+    func onLocationDetails(_ location: LocationModel, completion: ((LocationModel?) -> Void)?) {
+        let viewModel = LocationForecastViewModel(model: location, completion: { location in
+            self.navigationController.dismiss(animated: true) {
+                completion?(location)
+            }
+        })
         let view = LocationForecastView(viewModel)
         let viewController = UIHostingController(rootView: view)
         
-        navigationController.pushViewController(viewController, animated: true)
+        switch completion {
+        case .none:
+            let navController = UINavigationController(rootViewController: viewController)
+            navigationController.present(navController, animated: true)
+        case .some:
+            navigationController.pushViewController(viewController, animated: true)
+        }
     }
     
     func onServerSelection() {

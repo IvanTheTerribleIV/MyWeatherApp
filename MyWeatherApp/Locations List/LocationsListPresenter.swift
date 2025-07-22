@@ -19,6 +19,7 @@ final class LocationsListPresenter: LocationsListPresenterProtocol {
     private let getLocationsUseCase: GetLocationsUseCaseProtocol
     private let wireframe: LocationsWireframeProtocol
     private var locations: [LocationModel]
+    private(set) var getLocationsTask: Task<Void, Never>?
     
     init(locations: [LocationModel] = [], getLocationsUseCase: GetLocationsUseCaseProtocol = GetLocations(), wireframe: LocationsWireframeProtocol) {
         self.locations = locations
@@ -32,15 +33,18 @@ final class LocationsListPresenter: LocationsListPresenterProtocol {
     
     // MARK: UseCases
     func getLocations() {
-        locations = getLocationsUseCase.getLocations()
-
-        updateLocations()
+        getLocationsTask = Task {
+            locations = await getLocationsUseCase.getLocations()
+            await MainActor.run {
+                updateLocations()
+            }
+        }
     }
     
     func selectLocation(at indexPath: IndexPath) {
         let location = locations[indexPath.row]
         if location.currentWeather == nil { return }
-        wireframe.onLocationDetails(location, completion: { _ in })
+        wireframe.onLocationDetails(location, completion: nil)
     }
     
     func openSettings() {
@@ -50,6 +54,7 @@ final class LocationsListPresenter: LocationsListPresenterProtocol {
     func addNewLocation() {
         wireframe.onLocationSearch { [weak self] newModel in
             if let newModel {
+                Task { await self?.getLocationsUseCase.save(newModel) }
                 self?.locations.append(newModel)
                 self?.updateLocations()
             }            
@@ -58,7 +63,7 @@ final class LocationsListPresenter: LocationsListPresenterProtocol {
     
     private func updateLocations() {
         let useCase = GetWeatherUseCase()
-        let presenters: [LocationsListRowPresenter] = locations.map { .init(model: $0, useCase: useCase) }
+        let presenters: [LocationsListRowPresenter] = locations.map { .init(model: $0, weatherSseCase: useCase, locationUseCase: getLocationsUseCase) }
         
         ui?.update(locations: presenters)
     }

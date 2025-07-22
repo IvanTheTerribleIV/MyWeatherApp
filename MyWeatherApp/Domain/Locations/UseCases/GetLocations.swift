@@ -8,7 +8,9 @@
 import Foundation
 
 protocol GetLocationsUseCaseProtocol {
-    func getLocations() -> [LocationModel]
+    func getLocations() async -> [LocationModel]
+    func save(_ location: LocationModel) async
+    func delete(_ location: LocationModel) async
     func getLocations(by name: String) async throws -> LocationModel
     func searchLocation(searchText: String, completion: @escaping (Result<[SearchOptionModel], Error>) -> Void)
 }
@@ -23,8 +25,16 @@ struct GetLocations: GetLocationsUseCaseProtocol {
         self.repository = repository
     }
     
-    func getLocations() -> [LocationModel] {
-        repository.getLocations()
+    func getLocations() async -> [LocationModel] {
+        await repository.getLocations()
+    }
+    
+    func save(_ location: LocationModel) async {
+        await repository.save(location)
+    }
+    
+    func delete(_ location: LocationModel) async {
+        await repository.delete(location)
     }
     
     func getLocations(by name: String) async throws -> LocationModel {
