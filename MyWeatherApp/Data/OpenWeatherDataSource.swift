@@ -3,6 +3,7 @@ import Foundation
 protocol OpenWeatherDataSourceProtocol {
     func getCurrentWeather(lat: Double, lon: Double) async throws -> OpenWeatherDTO
     func getForecast(lat: Double, lon: Double) async throws -> [OpenWeatherDTO]
+    func getIconData(from url: URL) async -> Data?
 }
 
 struct OpenWeatherDataSource: OpenWeatherDataSourceProtocol {
@@ -30,6 +31,10 @@ struct OpenWeatherDataSource: OpenWeatherDataSourceProtocol {
         let data = try await apiClient.perorrmRequest(with: endpoint)
         let dto = try decoder.decode(OpenWeatherForecastDTO.self, from: data)
         return dto.list
+    }
+    
+    func getIconData(from url: URL) async -> Data? {
+        try? await apiClient.data(url)
     }
 }
 

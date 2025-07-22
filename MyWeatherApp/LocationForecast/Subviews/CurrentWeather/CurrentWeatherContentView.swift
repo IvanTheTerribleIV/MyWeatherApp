@@ -17,24 +17,29 @@ struct CurrentWeatherContentView: View {
     var body: some View {
         HStack {
             Spacer()
-            VStack {
+            VStack(spacing: 8) {
                 Text(viewModel.locationName)
                     .font(.system(size: 20).bold())
+                    .multilineTextAlignment(.center)
+                Text(viewModel.currentTemp)
+                    .font(.system(size: 60).bold())
+
                 HStack {
-                    Text(viewModel.currentTemp)
-                        .font(.system(size: 40))
                     AsyncImage(url: viewModel.iconUrl) { image in
                         image.image?.resizable()
+                            .frame(width: 50, height: 50)
                     }
-                    .frame(width: 60, height: 60)
+
+                    Text(viewModel.conditions)
+                        .font(.system(size: 18))
                 }
-                Text(viewModel.conditions)
-                    .font(.system(size: 18))
+                
                 Text(viewModel.minMaxTemp)
                     .font(.system(size: 20).bold())
             }
             Spacer()
         }
+        .padding()
         .background(.black)
         .foregroundStyle(.white)
         .clipShape(RoundedRectangle(cornerRadius: 12))

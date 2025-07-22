@@ -26,8 +26,7 @@ struct ForecastView: View {
     private var content: some View {
         switch viewModel.state {
         case .loading:
-            ProgressView()
-                .progressViewStyle(.circular)
+            LoadingView()
         case .error(let errorViewModel):
             EmptyView()
         case .content(let viewModel):

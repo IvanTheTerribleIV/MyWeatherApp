@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 final class CurrentWeatherViewModel: ObservableObject {
     @Published
@@ -26,14 +27,19 @@ final class CurrentWeatherViewModel: ObservableObject {
         state = .loading
         do {
             let currentWeatherModel = try await useCase.getCurrentWeather(for: model)
-            state = .content(.init(currentWeatherModel, location: model))
+            model.currentWeather = currentWeatherModel
+            withAnimation {
+                state = .content(.init(currentWeatherModel, location: model))
+            }
         } catch {
             let errorViewModel = ErrorViewModel(title: "", subtitle: "") { [weak self] in
                 self?.task = Task {
                     await self?.fetchData()
                 }
             }
-            state = .error(errorViewModel)
+            withAnimation {
+                state = .error(errorViewModel)
+            }
         }
     }
 }

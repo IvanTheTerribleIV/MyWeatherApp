@@ -45,3 +45,9 @@ extension CurrentWeatherModel {
                   date: Date(timeIntervalSince1970: openWeatherDTO.date))
     }
 }
+
+extension CurrentWeatherModel {
+    static var stub: CurrentWeatherModel {
+        .init(condition: "", description: "", icon: "", temp: 0, feelsLike: 0, tempMin: 0, tempMax: 0, pressure: 0, humidity: 0, sunrise: nil, sunset: nil, date: Date())
+    }
+}

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 final class ForecastViewModel: ObservableObject {
     @Published
@@ -26,14 +27,19 @@ final class ForecastViewModel: ObservableObject {
         state = .loading
         do {
             let forecast = try await useCase.getForecast(for: model)
-            state = .content(.init(forecast))
+            model.forecast = forecast
+            withAnimation {
+                state = .content(.init(forecast))
+            }
         } catch {
             let errorViewModel = ErrorViewModel(title: "", subtitle: "") { [weak self] in
                 self?.task = Task {
                     await self?.fetchData()
                 }
             }
-            state = .error(errorViewModel)
+            withAnimation {
+                state = .error(errorViewModel)
+            }
         }
     }
 }

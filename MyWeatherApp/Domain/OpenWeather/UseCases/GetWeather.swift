@@ -5,22 +5,26 @@
 //  Created by Ivan Makarov on 19.07.2025.
 //
 
+import UIKit
 import Foundation
 
 protocol GetWeatherUseCaseProtocol {
     func getCurrentWeather(for location: LocationModel) async throws -> CurrentWeatherModel
     func getForecast(for location: LocationModel) async throws -> [ForecastModel]
+    func getIcon(from url: URL) async -> UIImage?
 }
 
 struct GetWeatherUseCase: GetWeatherUseCaseProtocol {
     private let repository: OpenWeatherRepositoryProtocol
+    private let cahce: NSCache = NSCache<NSString, UIImage>()
     
     init(repository: OpenWeatherRepositoryProtocol = OpenWeatherRepository()) {
         self.repository = repository
     }
     
     func getCurrentWeather(for location: LocationModel) async throws -> CurrentWeatherModel {
-        try await repository.getCurrentWeather(lat: location.latitude, lon: location.longitude)
+        if let weather = location.currentWeather { return weather }
+        return try await repository.getCurrentWeather(lat: location.latitude, lon: location.longitude)
     }
     
     func getForecast(for location: LocationModel) async throws -> [ForecastModel] {
@@ -40,5 +44,17 @@ struct GetWeatherUseCase: GetWeatherUseCaseProtocol {
             }
         }
         return forecastArray
+    }
+    
+    func getIcon(from url: URL) async -> UIImage? {
+        if let cachedImage = cahce.object(forKey: NSString(string: url.absoluteString)) {
+            return cachedImage
+        }
+        
+        if let image = await repository.getIcon(from: url) {
+            cahce.setObject(image, forKey: NSString(string: url.absoluteString))
+            return image
+        }
+        return nil
     }
 }

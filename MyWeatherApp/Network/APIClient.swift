@@ -2,6 +2,7 @@ import Foundation
 
 protocol APIClientProtocol {
     func perorrmRequest(with endpoint: RestEndpoint) async throws(APIClient.NetworkError) -> Data
+    func data(_ url: URL) async throws -> Data
 }
 
 struct APIClient: APIClientProtocol {
@@ -45,5 +46,9 @@ struct APIClient: APIClientProtocol {
         } catch {
             throw NetworkError.fatal
         }
+    }
+    
+    func data(_ url: URL) async throws -> Data {
+        try await session.data(from: url).0
     }
 }

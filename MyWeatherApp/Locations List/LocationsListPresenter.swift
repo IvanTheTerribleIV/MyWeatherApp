@@ -39,6 +39,7 @@ final class LocationsListPresenter: LocationsListPresenterProtocol {
     
     func selectLocation(at indexPath: IndexPath) {
         let location = locations[indexPath.row]
+        if location.currentWeather == nil { return }
         wireframe.onLocationDetails(location, completion: { _ in })
     }
     

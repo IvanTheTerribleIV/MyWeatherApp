@@ -16,7 +16,7 @@ struct ForecastContentView: View {
     }
     
     var body: some View {
-        VStack {
+        VStack(spacing: 8) {
             ForEach(viewModel.viewModels) { rowViewModel in
                 ForecastListRow(rowViewModel)
             }
