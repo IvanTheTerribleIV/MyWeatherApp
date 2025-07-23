@@ -56,7 +56,11 @@ While AccuWeather integration was planned, time constraints led to focusing on O
 
 ### 6. 📐 MVVM for SwiftUI Modules
 
-- For SwiftUI-based modules, the **MVVM** pattern was adopted for its clean separation of concerns and strong compatibility with SwiftUI.
+For SwiftUI-based modules, the MVVM (Model–View–ViewModel) pattern was adopted for its clean separation of concerns and strong compatibility with SwiftUI.
+
+Importantly, MVVM was applied not only at the main view level, but also to subviews, ensuring consistent logic separation and testability throughout the app.
+
+The same architectural decision was made for UIKit-based MVP modules as well, where presenters were used even in subcomponents for better modularity, testability, and adherence to SOLID principles.
 
 ---
 
