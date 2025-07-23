@@ -15,14 +15,29 @@ struct ErrorView: View {
     }
     
     var body: some View {
-        VStack {
+        HStack {
             Spacer()
-            Text(viewModel.title)
-            Text(viewModel.subtitle)
-            Spacer()
-            Button(action: viewModel.action) {
-                Text("Try again")
+            VStack {
+                Spacer()
+                Text(viewModel.title)
+                    .font(.system(size: 18).bold())
+                Text(viewModel.subtitle)
+                    .font(.system(size: 16).bold())
+                Spacer()
+                Button(action: viewModel.action) {
+                    Text("Try again")
+                        .font(.system(size: 14).bold())
+                }
+                .frame(width: 100, height: 40)
+                .background(.blue)
+                .clipShape(RoundedRectangle(cornerRadius: 8))
             }
+            .foregroundStyle(.white)
+            .padding()
+            Spacer()
         }
+        .frame(height: 200)
+        .background(.black)
+        .clipShape(RoundedRectangle(cornerRadius: 8))
     }
 }

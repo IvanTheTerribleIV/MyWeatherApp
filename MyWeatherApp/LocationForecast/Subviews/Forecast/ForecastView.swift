@@ -28,7 +28,7 @@ struct ForecastView: View {
         case .loading:
             LoadingView()
         case .error(let errorViewModel):
-            EmptyView()
+            ErrorView(errorViewModel)
         case .content(let viewModel):
             ForecastContentView(viewModel)
         }

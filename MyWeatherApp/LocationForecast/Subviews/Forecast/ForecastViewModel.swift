@@ -32,7 +32,7 @@ final class ForecastViewModel: ObservableObject {
                 state = .content(.init(forecast))
             }
         } catch {
-            let errorViewModel = ErrorViewModel(title: "", subtitle: "") { [weak self] in
+            let errorViewModel = ErrorViewModel(title: "Error", subtitle: "Unable to load current forecast") { [weak self] in
                 self?.task = Task {
                     await self?.fetchData()
                 }

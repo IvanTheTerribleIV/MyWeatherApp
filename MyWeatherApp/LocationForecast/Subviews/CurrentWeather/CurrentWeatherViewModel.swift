@@ -32,7 +32,7 @@ final class CurrentWeatherViewModel: ObservableObject {
                 state = .content(.init(currentWeatherModel, location: model))
             }
         } catch {
-            let errorViewModel = ErrorViewModel(title: "", subtitle: "") { [weak self] in
+            let errorViewModel = ErrorViewModel(title: "Error", subtitle: "Unable to load current weather")  { [weak self] in
                 self?.task = Task {
                     await self?.fetchData()
                 }
